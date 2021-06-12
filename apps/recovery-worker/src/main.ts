@@ -1,8 +1,17 @@
+
+import { queueOptions } from '@app/shared';
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { RecoveryWorkerModule } from './recovery-worker.module';
+import { MicroserviceOptions } from '@nestjs/microservices';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(RecoveryWorkerModule);
-  await app.listen(3000);
+  const app = await NestFactory.create(AppModule);
+
+  await app.connectMicroservice<MicroserviceOptions>(
+    queueOptions.recovery
+  );
+ 
+  app.startAllMicroservices(() => Logger.log('Recovery Worker is work'))
 }
 bootstrap();
