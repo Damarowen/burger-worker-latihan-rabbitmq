@@ -1,24 +1,37 @@
 import { RabbitMQService } from '@app/rabbitmq';
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { BURGER_QUEUE } from '@app/rabbitmq/rabbitmq.constant';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 
-@Controller()
+class CreatePostDto {
+  customer?: string
+  patties?: number
+}
+
+
+@Controller('/post')
 export class AppController {
 
-MAKE_BURGER_PATTERN = 'MAKE_BURGER'
-
   constructor(
-    private readonly appService: AppService,
     private readonly rabbitMQService: RabbitMQService,
-  ) {}
+  ) { }
 
-  
-  @Get()
-  async getHello() {
-    this.rabbitMQService.send(this.MAKE_BURGER_PATTERN, {
-      message: this.appService.getHello(),
-    });
-    
-    return 'Message sent to the queue!';
+  @Post()
+  async PostTest(
+    @Body() createPost: CreatePostDto,
+  ) {
+    try {
+
+      const { customer, patties } = createPost
+      const data = { customer, patties }
+
+      this.rabbitMQService.send(BURGER_QUEUE, data);
+      return { customer, patties }
+    } catch (error) {
+      console.log(error)
+    }
   }
+}
+
+function IsNotEmpty() {
+  throw new Error('Function not implemented.');
 }

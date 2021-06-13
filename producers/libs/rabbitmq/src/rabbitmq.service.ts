@@ -1,15 +1,20 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { RABBITMQ_NAME } from './rabbitmq.constant';
+import { BURGER_QUEUE} from './rabbitmq.constant';
 
 @Injectable()
 export class RabbitMQService {
     constructor(
-        @Inject(RABBITMQ_NAME) private readonly client: ClientProxy,
+        @Inject(BURGER_QUEUE) private readonly client: ClientProxy,
     ) { }
 
 
     public send(pattern: string, data: any) {
-        return this.client.send(pattern, data).toPromise();
+        try {
+            return this.client.send(pattern, data).toPromise();
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
