@@ -20,9 +20,9 @@ export class AppController {
     @Ctx() context: RmqContext
   ) {
     try {
-      this.makeBurger(payload.patties);
-
-      this.emitBurgerSuccess(payload);
+      // this.makeBurger(payload.patties);
+console.log('wanjay',payload)
+      // this.emitBurgerSuccess(payload);
 
       // acknowledge that we processed the message
       context.getChannelRef().ack(context.getMessage());
