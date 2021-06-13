@@ -4,7 +4,7 @@ import { ClientsModule } from '@nestjs/microservices';
 import { AppController } from './app.controller';
 
 @Module({
-  // send messages to the burger-queue
+  //* send messages to the burger-queue
   imports: [ClientsModule.register([queueOptions.burger])],
   controllers: [AppController],
 })

@@ -35,7 +35,7 @@ export class AppController {
     @Payload() payload: MakeBurgerPayload,
     @Ctx() context: RmqContext,
   ) {
-    // increase the retry count by 1 or set it to 1 if it's undefined
+    //* increase the retry count by 1 or set it to 1 if it's undefined
     const retryCount = (payload.retryCount ?? 0) + 1;
     console.log(retryCount)
     console.log(payload.retryCount)
@@ -51,7 +51,7 @@ export class AppController {
       this.emitMakeBurger({ ...payload, retryCount });
     }
 
-    // always acknowledge the message
+    //* always acknowledge the message
     context.getChannelRef().ack(context.getMessage());
   }
 }

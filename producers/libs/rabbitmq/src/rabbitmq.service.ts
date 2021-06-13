@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, Logger } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { BURGER_QUEUE} from './rabbitmq.constant';
 
@@ -9,10 +9,10 @@ export class RabbitMQService {
     ) { }
 
 
-    public send(pattern: string, data: any) {
+    public async send(pattern: string, data: any) {
         try {
-            return this.client.send(pattern, data).toPromise();
-
+            Logger.log(`Burger for ${data.customer} is being cooked 😋`);
+            return await this.client.send(pattern, data).toPromise();
         } catch (error) {
             console.log(error)
         }

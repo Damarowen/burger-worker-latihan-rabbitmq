@@ -5,6 +5,5 @@ import { AppController } from './app.controller';
 @Module({
   imports: [RabbitMQModule],
   controllers: [AppController],
-  providers: [],
 })
 export class AppModule {}

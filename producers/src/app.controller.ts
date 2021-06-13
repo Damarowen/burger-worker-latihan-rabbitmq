@@ -1,6 +1,6 @@
 import { RabbitMQService } from '@app/rabbitmq';
-import { BURGER_QUEUE } from '@app/rabbitmq/rabbitmq.constant';
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { MAKE_BURGER_PATTERN } from '@app/rabbitmq';
+import { Body, Controller, Post } from '@nestjs/common';
 
 class CreatePostDto {
   customer?: string
@@ -24,7 +24,7 @@ export class AppController {
       const { customer, patties } = createPost
       const data = { customer, patties }
 
-      this.rabbitMQService.send(BURGER_QUEUE, data);
+      await this.rabbitMQService.send(MAKE_BURGER_PATTERN, data);
       return { customer, patties }
     } catch (error) {
       console.log(error)
@@ -32,6 +32,4 @@ export class AppController {
   }
 }
 
-function IsNotEmpty() {
-  throw new Error('Function not implemented.');
-}
+

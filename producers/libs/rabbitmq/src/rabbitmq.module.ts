@@ -10,6 +10,6 @@ import { RabbitMQService } from './rabbitmq.service';
   ],
   controllers: [],
   providers: [RabbitMQService],
-  exports: [RabbitMQService, queueOptions],
+  exports: [RabbitMQService],
 })
 export class RabbitMQModule { }

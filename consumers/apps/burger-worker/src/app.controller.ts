@@ -4,11 +4,11 @@ import { ClientProxy, Ctx, EventPattern, Payload, RmqContext } from "@nestjs/mic
 
 @Controller()
 export class AppController {
-  // add variable 
+  //* add variable 
   pattyCount = 0;
 
   constructor(
-    // use the injection token we provided earlier
+    //* use the injection token we provided earlier
     @Inject(queueOptions.burger.name) private burgerQueue: ClientProxy
   ) { }
 
@@ -23,15 +23,18 @@ export class AppController {
      this.makeBurger(payload.patties);
      this.emitBurgerSuccess(payload);
 
-      // acknowledge that we processed the message
+      //* acknowledge that we processed the message
       context.getChannelRef().ack(context.getMessage());
     } catch (err) {
       Logger.warn(
         `An error ${err} occured while preparing the burger for ${payload.customer}.`
       );
 
-      // reject message and set reque = false
-      // this will dead letter our message
+      //* reject message and set reque = false
+      //* this will dead letter our message
+      Logger.verbose(
+        `Recovery Worker is Doing His job !!`
+      );
       context.getChannelRef().reject(context.getMessage(), false);
     }
   }
@@ -44,7 +47,7 @@ export class AppController {
     Logger.log(`Burger for ${payload.customer} is ready 😋`);
     context.getChannelRef().ack(context.getMessage());
     console.log(payload)
-    console.log(this.pattyCount )
+    console.log('Total Patty',this.pattyCount)
   }
 
   @EventPattern(MAKE_BURGER_FAILURE_PATTERN)
@@ -59,7 +62,7 @@ export class AppController {
     context.getChannelRef().ack(context.getMessage());
   }
 
-   // simply throws an error for every third burger
+   //* simply throws an error for every third burger
    private makeBurger(patties: number) {
     for (let i = 0; i < patties; i++) {
       //* kalau entry 3 patty count lansung 4
@@ -72,7 +75,6 @@ export class AppController {
 
   private emitBurgerSuccess(payload: MakeBurgerSuccessPayload) {
     this.burgerQueue.emit(MAKE_BURGER_SUCCESS_PATTERN, payload);
-    console.log(payload)
   }
 
 }
