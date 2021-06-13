@@ -4,6 +4,7 @@
 for start you need to
 
 cd producers => yarn install => nest start -w
+
 cd consumers => yarn install
 
 in customer directory
