@@ -13,3 +13,14 @@ run yarn start:dev recovery-worker ( to start recovery-worker )
 
 producers will sent to customers to prepare a burger
 every third burger will fail, so recovery-worker will doing his job to send meessage again to customer
+
+
+insert this in publish message rabbit
+
+    {
+    "pattern": "MAKE_BURGER",
+    "data": {
+      "customer": "damar",
+      "patties": 1
+    }
+    }
