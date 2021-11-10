@@ -4,6 +4,6 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000, () => Logger.log('Producers is work'));
+  await app.listen(3001, () => Logger.log('Producers is work'));
 }
 bootstrap();

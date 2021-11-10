@@ -1,20 +1,22 @@
 import { Injectable, Inject, Logger } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { BURGER_QUEUE} from './rabbitmq.constant';
+import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 
 @Injectable()
 export class RabbitMQService {
     constructor(
-        @Inject(BURGER_QUEUE) private readonly client: ClientProxy,
+        private amqpCon: AmqpConnection
     ) { }
 
 
-    public async send(pattern: string, data: any) {
+    public async send(route: string, message: any) {
         try {
-            Logger.log(`Burger for ${data.customer} is being cooked 😋`);
-            return await this.client.send(pattern, data).toPromise();
+            Logger.log(`MESSAGE IS BEING SEND 😋`);
+            await this.amqpCon.publish("", route, message)
         } catch (error) {
             console.log(error)
         }
     }
 }
+
+
+

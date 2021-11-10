@@ -1,11 +1,5 @@
 import { RabbitMQService } from '@app/rabbitmq';
-import { MAKE_BURGER_PATTERN } from '@app/rabbitmq';
 import { Body, Controller, Post } from '@nestjs/common';
-
-class CreatePostDto {
-  customer?: string
-  patties?: number
-}
 
 
 @Controller('/post')
@@ -17,15 +11,14 @@ export class AppController {
 
   @Post()
   async PostTest(
-    @Body() createPost: CreatePostDto,
+    @Body() createPost,
   ) {
     try {
 
-      const { customer, patties } = createPost
-      const data = { customer, patties }
+      const { route, message } = createPost
 
-      await this.rabbitMQService.send(MAKE_BURGER_PATTERN, data);
-      return { customer, patties }
+      await this.rabbitMQService.send(route,message);
+      return { route, message }
     } catch (error) {
       console.log(error)
     }

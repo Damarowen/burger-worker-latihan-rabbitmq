@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@golevelup/nestjs-rabbitmq": "^1.18.1"
+  }
+}

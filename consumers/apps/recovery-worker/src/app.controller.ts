@@ -37,6 +37,8 @@ export class AppController {
   ) {
     //* increase the retry count by 1 or set it to 1 if it's undefined
     const retryCount = (payload.retryCount ?? 0) + 1;
+    console.log("INI RECOVERY")
+
     console.log(retryCount)
     console.log(payload.retryCount)
     if (retryCount > this.maxRetries) {

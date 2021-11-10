@@ -12,6 +12,6 @@ async function bootstrap() {
     queueOptions.recovery
   );
  
-  app.startAllMicroservices(() => Logger.log('Recovery Worker is work'))
+  app.startAllMicroservices(() => Logger.log('Recovery Worker is work COY'))
 }
 bootstrap();

@@ -12,6 +12,20 @@ export class AppController {
     @Inject(queueOptions.burger.name) private burgerQueue: ClientProxy
   ) { }
 
+   //* simply throws an error for every third burger
+   private makeBurger(patties: number) {
+    for (let i = 0; i < patties; i++) {
+      //* kalau entry 3 patty count lansung 4
+      this.pattyCount++;
+      if (this.pattyCount % 3 === 0) {
+        throw Error("Dropped patty 😓");
+      }
+    }
+  }
+
+  private emitBurgerSuccess(payload: MakeBurgerSuccessPayload) {
+    this.burgerQueue.emit(MAKE_BURGER_SUCCESS_PATTERN, payload);
+  }
 
 
   @EventPattern(MAKE_BURGER_PATTERN)
@@ -50,31 +64,17 @@ export class AppController {
     console.log('Total Patty',this.pattyCount)
   }
 
-  @EventPattern(MAKE_BURGER_FAILURE_PATTERN)
-  makeBurgerFailureEvent(
-    @Payload() payload: MakeBurgerPayload,
-    @Ctx() context: RmqContext,
-  ) {
-    Logger.error(
-      `Burger for ${payload.customer} couldn't be prepared. Will not retry 🔥`,
-    );
-    console.log(payload)
-    context.getChannelRef().ack(context.getMessage());
-  }
+  // @EventPattern(MAKE_BURGER_FAILURE_PATTERN)
+  // makeBurgerFailureEvent(
+  //   @Payload() payload: MakeBurgerPayload,
+  //   @Ctx() context: RmqContext,
+  // ) {
+  //   Logger.error(
+  //     `Burger for ${payload.customer} couldn't be prepared. Will not retry 🔥`,
+  //   );
+  //   console.log(payload)
+  //   context.getChannelRef().ack(context.getMessage());
+  // }
 
-   //* simply throws an error for every third burger
-   private makeBurger(patties: number) {
-    for (let i = 0; i < patties; i++) {
-      //* kalau entry 3 patty count lansung 4
-      this.pattyCount++;
-      if (this.pattyCount % 3 === 0) {
-        throw Error("Dropped patty 😓");
-      }
-    }
-  }
-
-  private emitBurgerSuccess(payload: MakeBurgerSuccessPayload) {
-    this.burgerQueue.emit(MAKE_BURGER_SUCCESS_PATTERN, payload);
-  }
 
 }

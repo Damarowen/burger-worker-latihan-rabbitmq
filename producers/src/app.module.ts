@@ -1,9 +1,9 @@
-import { RabbitMQModule } from '@app/rabbitmq';
+import { RabbitMQModules } from '@app/rabbitmq';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 
 @Module({
-  imports: [RabbitMQModule],
+  imports: [RabbitMQModules],
   controllers: [AppController],
 })
 export class AppModule {}

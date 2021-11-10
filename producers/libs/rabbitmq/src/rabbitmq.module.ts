@@ -1,15 +1,16 @@
-import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { queueOptions } from './queue-option';
 
+import { RabbitMQModule } from "@golevelup/nestjs-rabbitmq";
+import { Module } from "@nestjs/common";
 import { RabbitMQService } from './rabbitmq.service';
 
 @Module({
   imports: [
-    ClientsModule.register([queueOptions.burger])
+    RabbitMQModule.forRoot(RabbitMQModule, {
+      uri: "amqp://guest:guest@localhost:5672",
+      connectionInitOptions: { wait: false },
+    }),
   ],
-  controllers: [],
   providers: [RabbitMQService],
   exports: [RabbitMQService],
 })
-export class RabbitMQModule { }
+export class RabbitMQModules {}
