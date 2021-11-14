@@ -9,7 +9,10 @@ export class RabbitMQService {
 
 
     public async send(route: string, message: any) {
+       
         try {
+            console.log("🚀 ~ file: rabbitmq.service.ts ~ line 12 ~ RabbitMQService ~ send ~ message", message)
+            console.log("🚀 ~ file: rabbitmq.service.ts ~ line 12 ~ RabbitMQService ~ send ~ route", route)
             Logger.log(`MESSAGE IS BEING SEND 😋`);
             await this.amqpCon.publish("", route, message)
         } catch (error) {

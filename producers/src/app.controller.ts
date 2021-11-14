@@ -15,10 +15,10 @@ export class AppController {
   ) {
     try {
 
-      const { route, message } = createPost
+      const { route, data } = createPost
 
-      await this.rabbitMQService.send(route,message);
-      return { route, message }
+      await this.rabbitMQService.send(route,data);
+      return { route, data }
     } catch (error) {
       console.log(error)
     }
