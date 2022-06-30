@@ -19,7 +19,7 @@ export class AppController {
         user: {
           id: "damar",
           username: "damarowen",
-          email: "damarowen@gmail.com"
+          email: "damar@femaledaily.com"
         },
         "email": {
           "subject": "DARI FDBR newww",
@@ -27,11 +27,30 @@ export class AppController {
         }
       }
 
-      const resp =await this.rabbitMQService.send(route, data);// 15
+      //* sync data user ga pake rabbit langsug pake ES
+      await this.rabbitMQService.send(route, data);// 1
+      await this.rabbitMQService.send(route, data);// 2
+      await this.rabbitMQService.send(route, data);// 3
+      await this.rabbitMQService.send(route, data);// 4
+      await this.rabbitMQService.send(route, data);// 5
+      await this.rabbitMQService.send(route, data);// 6
+      await this.rabbitMQService.send(route, data);// 7
+      await this.rabbitMQService.send(route, data);// 8
+      await this.rabbitMQService.send(route, data);// 9
+      await this.rabbitMQService.send(route, data);// 10
+      await this.rabbitMQService.send(route, data);// 11
+      await this.rabbitMQService.send(route, data);// 12
+      await this.rabbitMQService.send(route, data);// 13
+      await this.rabbitMQService.send(route, data);// 14
+      await this.rabbitMQService.send(route, data);// 15
 
+
+       const wait = (timeToDelay: number): any =>
+        new Promise(resolve => setTimeout(resolve, timeToDelay))
+//await wait(10000)
       // return { route, data }
 
-      return resp
+      return "status : ok"
 
     } catch (error) {
       console.log(error)
